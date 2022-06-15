@@ -7,31 +7,42 @@ namespace trabalho_sobre_memento
     {
         static void Main(string[] args)
         {
-            //Criar a instância de pessoa
-            Pessoa pessoa = new Pessoa("Gabrielle",23);
+            var Cores = new
+            {
+                Titulo = ConsoleColor.Yellow,
+                Corpo = ConsoleColor.Red,
+            };
 
-            //Salvar estado
-            pessoa.SalvarEstado();
+            ColorWriteLine(Cores.Titulo, "Primeiro caso (Criar nova pessoa e salvar o estado atual dela)");
+            Pessoa pessoa = new Pessoa("Gabrielle", 23);
+            Memento memento = pessoa.SalvarEstado();
 
-            //Mostrar situação atual e do memento
-            pessoa.MostrarDetalhes();
-
-            //Alterar atributos
-            pessoa.Nome = "Luan";
-            pessoa.Idade = 23;
-
-            //Mostrar situação atual e do memento
-            Console.WriteLine();
-            pessoa.MostrarDetalhes();
-
-            //Restaurar estado
-            pessoa.RestaurarEstado();
-
-            //Mostrar situação atual e do memento
-            Console.WriteLine();
-            pessoa.MostrarDetalhes();
-
+            Console.WriteLine(pessoa.Detalhes());
+            Console.WriteLine(memento.Detalhes());
             Console.ReadKey();
+            Console.Clear();
+
+            ColorWriteLine(Cores.Titulo, "Segundo caso (altera valores da pessoa e exibe os estados dela e do memento)");
+            pessoa.Nome = "Luan";
+            pessoa.Idade = 22;
+            
+            Console.WriteLine(pessoa.Detalhes());
+            Console.WriteLine(memento.Detalhes());
+            Console.ReadKey();
+            Console.Clear();
+
+            ColorWriteLine(Cores.Titulo, "Terceiro caso (restaura valor da pessoa utilizando do memento)");
+            pessoa.RestaurarEstado(memento);
+            Console.WriteLine(pessoa.Detalhes());
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        //função que só serve pra criar um texto diferente na tela
+        static void ColorWriteLine(ConsoleColor color, string text) {
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ResetColor();
         }
     }
 }

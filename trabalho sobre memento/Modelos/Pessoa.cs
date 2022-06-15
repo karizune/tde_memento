@@ -9,8 +9,6 @@ namespace trabalho_sobre_memento.Modelos
         public string Nome { get; set; }
         public int Idade { get; set; }
 
-        public Pessoa Memento { get; private set; }
-
         public Pessoa(string nome, int idade)
         {
             Nome = nome;
@@ -18,29 +16,26 @@ namespace trabalho_sobre_memento.Modelos
         }
 
         //salvar estado, guardar informações de nome e idade. criando uma nova instancia do objeto
-        public void SalvarEstado()
+        public Memento SalvarEstado()
         {
-            Memento = new Pessoa(Nome, Idade);
+            Console.WriteLine("\nSalvando estado...");
+            return new Memento(new Pessoa(Nome,Idade));
         }
 
         //restaurar estado, recuperar informações do memento e passar para a classe atual
-        public void RestaurarEstado()
+        public void RestaurarEstado(Memento memento)
         {
-            if (Memento != null)
+            Console.WriteLine("\nRestaurando estado...");
+            if (memento != null && memento.pessoa != null)
             {
-                Nome = Memento.Nome;
-                Idade = Memento.Idade;
+                Nome = memento.pessoa.Nome;
+                Idade = memento.pessoa.Idade;
             }
         }
 
-        public void MostrarDetalhes()
+        public string Detalhes()
         {
-            Console.WriteLine($"Pessoa: Nome é {Nome} e idade é {Idade}");
-
-            if (Memento != null)
-            {
-                Console.WriteLine($"Memento: Nome é {Memento.Nome} e idade é {Memento.Idade}");
-            }
+            return $"\nPessoa: Nome é {Nome} e idade é {Idade}";
         }
     }
 }
